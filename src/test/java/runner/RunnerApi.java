@@ -15,7 +15,7 @@ import org.junit.runner.RunWith;
         },
         features = "src/test/resources/featureAPI",
         glue = {"stepdefinitions","hooks"},
-        tags = "@mrb",
+        tags = "@son",
 
         dryRun = false
 )

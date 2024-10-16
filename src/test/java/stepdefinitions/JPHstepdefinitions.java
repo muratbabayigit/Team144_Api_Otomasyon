@@ -2,6 +2,7 @@ package stepdefinitions;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
@@ -18,6 +19,8 @@ public class JPHstepdefinitions {
     Response response;
     JsonPath resJP;
     JSONObject postReqBody;
+    JSONObject putReqBody;
+    JSONObject putExpBody;
 
 
     @Given("kullanici {string} adresine gider")
@@ -121,6 +124,38 @@ public class JPHstepdefinitions {
             Assert.assertEquals((Integer)resJP.getInt("id"),expid);
 
 
+    }
+
+    @Then("kullanici put request icin {string} , {string}, {int} degerlerini kaydeder")
+    public void kullanici_put_request_icin_degerlerini_kaydeder(String title, String body, Integer userId) {
+        putReqBody=new JSONObject();
+        putReqBody.put("title",title);
+        putReqBody.put("body",body);
+        putReqBody.put("userId",userId);
+    }
+    @When("kullanici girilen bilgilerle put request yapar ve response bilgilerini kaydeder")
+    public void kullanici_girilen_bilgilerle_put_request_yapar_ve_response_bilgilerini_kaydeder() {
+        response=RestAssured
+                .given().contentType(ContentType.JSON).when().body(putReqBody.toString()).put(endpoint);
+    }
+
+    @Then("kullanici beklenen body icin {string} , {string}, {int} , {int}")
+    public void kullanici_beklenen_body_icin(String title, String body, Integer userId, Integer id) {
+        putExpBody=new JSONObject();
+        putExpBody.put("title",title);
+        putExpBody.put("body",body);
+        putExpBody.put("userId",userId);
+        putExpBody.put("id",id);
+    }
+
+    @Then("kullanici beklenen ve donen datalarin ayni oldugunu test eder")
+    public void kullanici_beklenen_ve_donen_datalarin_ayni_oldugunu_test_eder() {
+
+        resJP=response.jsonPath();
+        org.junit.Assert.assertEquals(putExpBody.getString("title"),resJP.getString("title"));
+        org.junit.Assert.assertEquals(putExpBody.getString("body"),resJP.getString("body"));
+        org.junit.Assert.assertEquals(putExpBody.getInt("userId"),resJP.getInt("userId"));
+        org.junit.Assert.assertEquals(putExpBody.getInt("id"),resJP.getInt("id"));
     }
 
 }
