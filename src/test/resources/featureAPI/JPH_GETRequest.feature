@@ -1,6 +1,5 @@
 Feature: US01 Kullanıcı Get Request yapar
 
-  @Api
   Scenario: TC Kullanıcı Get Request sonucundaki Response degerleri beklenen degerlerle karşılaştırır
 
     Given kullanici "JPHUrl" adresine gider
