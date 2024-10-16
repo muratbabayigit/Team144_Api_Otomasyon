@@ -68,6 +68,8 @@ public class JPHstepdefinitions {
 
     @Then("kullanici {string} degerinin {string} oldugunu test eder")
     public void kullanici_degerinin_oldugunu_test_eder(String string1, String string2) {
-        Assert.assertEquals(resJP.getString("title"),string2);
+        Assert.assertEquals(resJP.getString(string1),string2);
+
+
            }
 }
