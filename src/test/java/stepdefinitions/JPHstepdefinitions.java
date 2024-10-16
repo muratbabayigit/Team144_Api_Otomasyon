@@ -66,8 +66,10 @@ public class JPHstepdefinitions {
 
     }
 
-    @Then("kullanici {string} degerinin {string} oldugunu test eder")
-    public void kullanici_degerinin_oldugunu_test_eder(String string1, String string2) {
-        Assert.assertEquals(resJP.getString("title"),string2);
-           }
+    @Then("kullanici response bodydeki {string} degerinin String {string}")
+    public void kullanici_response_bodydeki_degerinin_string(String string1, String string2) {
+        resJP = response.jsonPath();
+        org.junit.Assert.assertEquals(string2,resJP.getString(string1));
+
+    }
 }
